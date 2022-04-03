@@ -27,7 +27,7 @@ services:
     # https://github.com/facebook/create-react-app/issues/8688
     # because of react-scripts is v3.2 so it will cause the `exit with code 0 error` when npm start
     # add below code would solve the problem
-    # stdin_open: true
+    stdin_open: true
   db:
     image: mysql:5.7
     environment:
