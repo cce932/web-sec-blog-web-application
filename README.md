@@ -29,13 +29,6 @@ You will also see any lint errors in the console.
 
 Build this project for production.
 
-## Using only the component
-
-If you want to use only the react component without using php api.
-Please download 'src/components/Form/' folder.
-
-You can use the form component like this `<Form config={config} />`
-
 ## Run PHP API with docker
 
 First you need docker installed in you machine. Once you have docker installed please
