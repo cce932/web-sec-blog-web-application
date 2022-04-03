@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./api:/api
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - code-network
+  php:
+    build: ./api
+    volumes:
+      - ./api:/api
+    networks:
+      - code-network
+  app:
+    build:
+      context: ./app/
+    volumes:
+      - ./app/:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    # https://github.com/facebook/create-react-app/issues/8688
+    # because of react-scripts is v3.2 so it will cause the `exit with code 0 error` when npm start
+    # add below code would solve the problem
+    # stdin_open: true
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: myDb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: PASSWORD_test
+      MYSQL_ROOT_PASSWORD: ROOT_PASSWORD_test
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - code-network
+    # hostname: demo.dena.software
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - 8082:80
+    # hostname: test.fei.works
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: PASSWORD_test
+      MYSQL_ROOT_PASSWORD: ROOT_PASSWORD_test
+    networks:
+      - code-network
+networks:
+  code-network:
+    driver: bridge
