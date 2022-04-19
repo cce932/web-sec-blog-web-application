@@ -1,28 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "@mui/material/styles";
-import Login from "./pages/Login";
-import Layout from "./pages/Layout";
-import theme from "./theme";
-import { CssBaseline } from "@mui/material";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import theme from './theme';
+import { App } from './app';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/login" element={<Login />} />
-          {/* <Route index element={<Home />} /> */}
-          {/* <Route path="teams" element={<Teams />}>
-              <Route path=":teamId" element={<Team />} />
-              <Route path="new" element={<NewTeamForm />} />
-              <Route index element={<LeagueStandings />} />
-            </Route> */}
-        </Route>
-      </Routes>
+      <App />
     </BrowserRouter>
   </ThemeProvider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
