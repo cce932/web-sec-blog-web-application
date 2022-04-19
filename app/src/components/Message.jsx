@@ -5,6 +5,7 @@ import { useProfileContext } from '../hooks/useProfile';
 import { Parser } from 'react-tiny-bbcode';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DownloadIcon from '@mui/icons-material/Download';
+import api from '../api';
 import useAuthenticApi from '../hooks/useAuthenticApi';
 
 export default function Message({ message, setAllMessages = null }) {
@@ -29,7 +30,22 @@ export default function Message({ message, setAllMessages = null }) {
   };
 
   const downloadFile = () => {
-    authApi.get(`/file/get.php?message_id=${message.id}`);
+    api({
+      url: `/file/get.php?message_id=${message.id}`,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      console.log(response);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute(
+        'download',
+        response.headers?.['content-disposition'].split('=')[1]
+      );
+      document.body.appendChild(link);
+      link.click();
+    });
   };
 
   return (
