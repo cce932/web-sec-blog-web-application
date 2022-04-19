@@ -1,25 +1,16 @@
 <?php
-// include the configs / constants for the database connection
 require_once("../config/db.php");
 require_once("../config/header.php");
 
-// load the registration class
 require_once("classes/Registration.php");
 require_once("classes/ImageUploader.php");
-
-// create the registration object. when this object is created, it will do all registration stuff automatically
-// so this single line handles the entire registration process.
-
-// 因為是傳入form data所以不用轉json
-// $rest_json = file_get_contents("php://input");
-// $_POST = json_decode($rest_json, true);
 
 $registration = new Registration();
 $res = array();
 $isSuccess = true;
 
 try {
-// upload image
+    // upload image
     $imageUploader = new ImageUploader();
     $imageUploader->setPath("../uploads");   // The directory where images will be uploaded
     // The rest are optional

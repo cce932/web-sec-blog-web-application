@@ -1,10 +1,6 @@
 <?php
-// include the configs / constants for the database connection
 require_once("../config/db.php");
 require_once("../config/header.php");
-
-// $rest_json = file_get_contents("php://input");
-// $_POST = json_decode($rest_json, true);
 
 $res = array();
 
@@ -38,7 +34,6 @@ if (isset($_POST)) {
     }
 
     // Save file
-
     if (isset($_FILES['file'])) {
       $name = $db_connection->real_escape_string($_FILES['file']['name']);
       $type = $db_connection->real_escape_string($_FILES['file']['type']);
@@ -56,7 +51,6 @@ if (isset($_POST)) {
       $result = $db_connection->query($insertFileSql);
   
       
-      // Check if it was successfull
       if($result) {
           http_response_code(200);
           echo json_encode(array_merge($res, ["file_messages" =>'Your file was successfully added!']));
