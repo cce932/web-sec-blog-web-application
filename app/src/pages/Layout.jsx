@@ -52,13 +52,16 @@ const Layout = () => {
     if (profile?.id && !profile.imageLink) {
       authApi
         .get('/auth/get_avatar_image.php', {
-          responseType: 'arraybuffer',
+          responseType: 'blob',
         })
         .then((res) => {
-          setAvatarImage(res.data);
+          setAvatarImage(window.URL.createObjectURL(res.data));
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile]);
 
+  useEffect(() => {
     authApi
       .get('/control_center/get_title.php')
       .then(({ data }) => {
@@ -67,8 +70,7 @@ const Layout = () => {
       .catch((error) => {
         alert('Loading Title Error! Please Retry.');
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const goControlCenter = () => {
     navigate('/control-center');
