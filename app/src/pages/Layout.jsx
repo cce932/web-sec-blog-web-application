@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 import {
   Box,
@@ -15,34 +15,23 @@ import {
   MenuItem,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useContext } from 'react';
-import { ProfileContext } from '../hooks/useProfile';
+import { useProfileContext } from '../hooks/useProfile';
 import { useEffect } from 'react';
 import useAuthenticApi from '../hooks/useAuthenticApi';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-
 const Layout = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const [avatarImage, setAvatarImage] = useState(null);
+  const [title, setTitle] = useState('');
   const navigate = useNavigate();
-  const { profile, setProfile } = useContext(ProfileContext);
   const authApi = useAuthenticApi();
+  const { profile, setProfile } = useProfileContext();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   const logout = () => {
@@ -67,9 +56,10 @@ const Layout = () => {
           responseType: 'arraybuffer',
         })
         .then((res) => {
-          setAvatarImage(URL.createObjectURL(res.data));
+          setAvatarImage(res.data);
         });
     }
+
     authApi
       .get('/control_center/get_title.php')
       .then(({ data }) => {
@@ -80,6 +70,10 @@ const Layout = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const goControlCenter = () => {
+    navigate('/control-center');
+  };
 
   return (
     <Box sx={{ width: '100%', height: '100%' }}>
@@ -127,20 +121,20 @@ const Layout = () => {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {/* {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))} */}
                 <MenuItem onClick={logout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
+                <MenuItem onClick={goControlCenter}>
+                  <Typography textAlign="center">Control Center</Typography>
+                </MenuItem>
               </Menu>
             </Box>
+
             <Typography
               variant="h6"
               noWrap
               component="div"
+              color="primary"
               sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
             >
               <Link to="/" style={{ textDecoration: 'none', color: 'unset' }}>
@@ -148,49 +142,30 @@ const Layout = () => {
               </Link>
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
-              ))}
+              <Button
+                onClick={goControlCenter}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Control Center
+              </Button>
+              <Button
+                onClick={logout}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Logout
+              </Button>
             </Box>
+
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 {profile?.img_link ? (
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src={profile.img_link} />
-                  </IconButton>
+                  <Avatar alt="Remy Sharp" src={profile.img_link} />
                 ) : (
                   <Box sx={{ width: '30px' }}>
                     <img src={avatarImage} alt="avatar" />
                   </Box>
                 )}
               </Tooltip>
-
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem onClick={logout}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
-              </Menu>
             </Box>
           </Toolbar>
         </Container>
