@@ -49,8 +49,7 @@ const Layout = () => {
   };
 
   useEffect(() => {
-    console.log('layout', profile.imageLink);
-    if (!profile.imageLink) {
+    if (profile?.id && !profile.imageLink) {
       authApi
         .get('/auth/get_avatar_image.php', {
           responseType: 'arraybuffer',
