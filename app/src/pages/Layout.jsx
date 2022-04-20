@@ -15,18 +15,20 @@ import {
   MenuItem,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import errorHandler from '../utils/errorHandler';
 import { useContext } from 'react';
 import { ProfileContext } from '../hooks/useProfile';
+import { useEffect } from 'react';
+import useAuthenticApi from '../hooks/useAuthenticApi';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Layout = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [avatarImage, setAvatarImage] = useState(null);
   const navigate = useNavigate();
   const { profile } = useContext(ProfileContext);
+  const authApi = useAuthenticApi();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -54,6 +56,20 @@ const Layout = () => {
         alert('Logout Error! Please Retry.');
       });
   };
+
+  useEffect(() => {
+    console.log('layout', profile.imageLink);
+    if (!profile.imageLink) {
+      authApi
+        .get('/auth/get_avatar_image.php', {
+          responseType: 'arraybuffer',
+        })
+        .then((res) => {
+          setAvatarImage(URL.createObjectURL(res.data));
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box sx={{ width: '100%', height: '100%' }}>
@@ -130,16 +146,15 @@ const Layout = () => {
             </Box>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={
-                      profile.img_link
-                        ? profile.img_link
-                        : '/static/images/avatar/2.jpg'
-                    }
-                  />
-                </IconButton>
+                {profile?.img_link ? (
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src={profile.img_link} />
+                  </IconButton>
+                ) : (
+                  <Box sx={{ width: '30px' }}>
+                    <img src={avatarImage} alt="avatar" />
+                  </Box>
+                )}
               </Tooltip>
 
               <Menu

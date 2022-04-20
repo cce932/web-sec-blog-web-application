@@ -346,7 +346,7 @@ class ImageUploader
   {
     $this->securityChecks($image);
 
-    // $this->reprocessImage($image, $callback);
+    $this->reprocessImage($image, $callback);
 
     $destination_path = $this->getImagePath($identifier);
     $result = move_uploaded_file($image["tmp_name"], $destination_path);
@@ -406,10 +406,10 @@ class ImageUploader
     if (!$this->exists($identifier)) {
       // if image not saved in file, than find the image_link in DB
       $image_link = $this->serveImageLink($identifier);
-
+      
       return $image_link;
     }
-
+    
     // Calculating the image path and the mime type
     $image_path = $this->getImagePath($identifier);
     $mime_type = getimagesize($image_path)["mime"];

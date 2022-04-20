@@ -19,6 +19,7 @@ class Registration
      * @var array $messages Collection of success / neutral messages
      */
     public $messages = array();
+    public $new_user_id = null;
 
     /**
      * the function "__construct()" automatically starts whenever an object of this class is created,
@@ -100,6 +101,8 @@ class Registration
                             VALUES('" . $user_name . "', '" . $password_hash .  "', '" . "');";
                     $query_new_user_insert = $this->db_connection->query($sql);
 
+                    $this->new_user_id = $this->db_connection->insert_id;
+                    
                     // if user has been added successfully
                     if ($query_new_user_insert) {
                         $this->messages[] = "Your account has been created successfully. You can now log in.";

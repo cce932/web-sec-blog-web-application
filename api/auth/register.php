@@ -9,19 +9,33 @@ $registration = new Registration();
 $res = array();
 $isSuccess = true;
 
+if (isset($registration)) {
+    if ($registration->errors) {
+        $isSuccess = false;
+        foreach ($registration->errors as $error) {
+            $res = array_merge($res, array("error" => "Register Error: " . $error));
+        }
+    }
+    if ($registration->messages) {
+        foreach ($registration->messages as $message) {
+          $res = array_merge($res, array("message" => "Register " . $message));
+        }
+    }
+  }
+
 try {
     // upload image
     $imageUploader = new ImageUploader();
-    $imageUploader->setPath("../uploads");   // The directory where images will be uploaded
+    $imageUploader->setPath("../uploads");
     // The rest are optional
-    $imageUploader->setSalt("my_application_specific_salt");  // It is used while hashing image names
+    $imageUploader->setSalt("my_application_specific_salt");
     $imageUploader->setMinFileSize(0);
     $imageUploader->setMaxFileSize(200000);
 
     if ($_POST["upload_avatar_method"] === "imageLink") {
         $imageUploader->uploadImageLink($_POST["avatar"], $_POST["user_name"]);
     } else { // imageFile
-        $imageUploader->uploadImageFile($_FILES["avatar"], $_POST["user_name"]);
+        $imageUploader->uploadImageFile($_FILES["avatar"], $registration->new_user_id);
     }
 
     // get image
@@ -34,20 +48,6 @@ try {
     if ($isSuccess) $res = array_merge($res, array("message" => "Avatar Upload " . "Success")); // haven't used by frontend
 }
 
-
-if (isset($registration)) {
-  if ($registration->errors) {
-      $isSuccess = false;
-      foreach ($registration->errors as $error) {
-          $res = array_merge($res, array("error" => "Register Error: " . $error));
-      }
-  }
-  if ($registration->messages) {
-      foreach ($registration->messages as $message) {
-        $res = array_merge($res, array("message" => "Register " . $message));
-      }
-  }
-}
 if ($isSuccess) http_response_code(201);
 else http_response_code(400);
 
