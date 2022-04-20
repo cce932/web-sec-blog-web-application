@@ -20,7 +20,7 @@ export function App() {
     function setGlobalProfile() {
       if (['/login', '/register'].includes(location.pathname)) return;
 
-      if (!Object.keys(profile.profile).length) {
+      if (!profile?.profile?.id) {
         const localProfile = localStorage.getItem('profile');
 
         if (!localProfile) navigate('/login');
