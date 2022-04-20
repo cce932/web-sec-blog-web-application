@@ -17,9 +17,9 @@ import errorHandler from '../utils/errorHandler';
 
 const Register = () => {
   const [error, setError] = useState('');
-  const [username, setUsername] = useState('ww');
-  const [password, setPassword] = useState('denade');
-  const [passwordRepeat, setPasswordRepeat] = useState('denade');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
   const [avatarLink, setAvatarLink] = useState('');
   const [avatarImage, setAvatarImage] = useState(null);
   const [uploadAvatarMethod, setUploadAvatarMethod] = useState('imageFile');
@@ -152,7 +152,7 @@ const Register = () => {
                   sx={{ width: '100%' }}
                   id="avatar"
                   type="avatar"
-                  label="Passowrd"
+                  label="Image Link"
                   variant="outlined"
                   value={avatarLink}
                   onChange={(e) => {

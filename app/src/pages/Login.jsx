@@ -4,13 +4,12 @@ import api from '../api';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import errorHandler from '../utils/errorHandler';
-import { useContext } from 'react';
-import { ProfileContext } from '../hooks/useProfile';
+import { useProfileContext } from '../hooks/useProfile';
 
 const Login = () => {
-  const [data, setData] = useState({ username: 'df', password: 'denade' });
+  const [data, setData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
-  const { setProfile } = useContext(ProfileContext);
+  const { setProfile } = useProfileContext();
   const navigate = useNavigate();
 
   const submit = (e) => {
