@@ -13,7 +13,7 @@ const useAuthenticApi = () => {
     },
   });
 
-  instance.defaults.headers.common['Authorization'] = profile.id; // or directly define in headers when creating
+  instance.defaults.headers.common['Authorization'] = profile?.id ? profile?.id : undefined; // or directly define in headers when creating
 
   return instance;
 };
