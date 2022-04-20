@@ -27,7 +27,7 @@ const Layout = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [avatarImage, setAvatarImage] = useState(null);
   const navigate = useNavigate();
-  const { profile } = useContext(ProfileContext);
+  const { profile, setProfile } = useContext(ProfileContext);
   const authApi = useAuthenticApi();
 
   const handleOpenNavMenu = (event) => {
@@ -50,6 +50,8 @@ const Layout = () => {
       .get('/auth/login.php?logout')
       .then((res) => {
         alert('You have been logout.');
+        localStorage.removeItem('profile');
+        setProfile({});
         navigate('/login');
       })
       .catch((error) => {

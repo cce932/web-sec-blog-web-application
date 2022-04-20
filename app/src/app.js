@@ -17,7 +17,7 @@ export function App() {
 
   useEffect(() => {
     function setGlobalProfile() {
-      if (location.pathname === '/login') return;
+      if (['/login', '/register'].includes(location.pathname)) return;
 
       if (!Object.keys(profile.profile).length) {
         const localProfile = localStorage.getItem('profile');

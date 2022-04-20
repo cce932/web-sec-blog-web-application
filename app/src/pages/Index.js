@@ -80,6 +80,11 @@ const Index = () => {
       return;
     }
 
+    if (messageInput.length > 250) {
+      alert(`Message tooo long! The numbers of word must be less than 250. Now it's ${messageInput.length} words.`);
+      return;
+    }
+
     let formData = new FormData();
     formData.append('message', messageInput);
     formData.append('username', profile.username);
@@ -95,7 +100,7 @@ const Index = () => {
             id: data.id,
             message: messageInput,
             username: profile.username,
-            name: messageFile.name,
+            name: messageFile?.name,
           },
           ...prev,
         ]);
@@ -114,6 +119,9 @@ const Index = () => {
       <Stack spacing={4} sx={{ maxWidth: '60%', margin: 'auto' }}>
         <Typography variant="h5" color="primary.light">
           Leave a message ~
+        </Typography>
+        <Typography color="white" sx={{mt: '5px !important'}}>
+          (The numbers of words must be less than 250)
         </Typography>
         <Box>
           <Editor
