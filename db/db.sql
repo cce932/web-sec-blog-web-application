@@ -6,15 +6,13 @@ CREATE TABLE `users` (
   `username` varchar(64) NOT NULL,
   `password_hash` varchar(64) NOT NULL,
   `img_link` varchar(512) NOT NULL,
+  `role` varchar(32) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO `users` (`id`, `username`, `password_hash`, `img_link`) VALUES ("1", "admin", "123456", "https://lh3.googleusercontent.com/ogw/ADea4I69rbecMbB2lLleDMlm2C2vUm5y4LsRSJ4YUJYtUQ=s64-c-mo");
-INSERT INTO `users` (`id`, `username`, `password_hash`, `img_link`) VALUES ("2", "nqgr", "abcdef", "https://lh3.googleusercontent.com/ogw/ADea4I69rbecMbB2lLleDMlm2C2vUm5y4LsRSJ4YUJYtUQ=s64-c-mo");
-INSERT INTO `users` (`id`, `username`, `password_hash`, `img_link`) VALUES ("3", "ombz", "qazwsx", "https://lh3.googleusercontent.com/ogw/ADea4I69rbecMbB2lLleDMlm2C2vUm5y4LsRSJ4YUJYtUQ=s64-c-mo");
-INSERT INTO `users` (`id`, `username`, `password_hash`, `img_link`) VALUES ("4", "dl", "$2y$10$9O6lOg34dnX1H39.gXntceYC42ocWpp/KkyS53tR/7KucmRINm4v6", "https://lh3.googleusercontent.com/ogw/ADea4I69rbecMbB2lLleDMlm2C2vUm5y4LsRSJ4YUJYtUQ=s64-c-mo");
-INSERT INTO `users` (`id`, `username`, `password_hash`, `img_link`) VALUES ("5", "fdsfa", "tgbyhn", "https://lh3.googleusercontent.com/ogw/ADea4I69rbecMbB2lLleDMlm2C2vUm5y4LsRSJ4YUJYtUQ=s64-c-mo");
+INSERT INTO `users` (`id`, `username`, `password_hash`, `img_link`, `role`) VALUES ("1", "admin", "$2y$10$SkfH2doi0pvq60sx9D/jWO/zn4bU.ZJgW3BHQVowJbI8epK6A5qWe", "https://memegenerator.net/img/instances/59660050.jpg", "admin");
+INSERT INTO `users` (`id`, `username`, `password_hash`, `img_link`, `role`) VALUES ("2", "dd", "$2y$10$9O6lOg34dnX1H39.gXntceYC42ocWpp/KkyS53tR/7KucmRINm4v6", "https://lh3.googleusercontent.com/ogw/ADea4I69rbecMbB2lLleDMlm2C2vUm5y4LsRSJ4YUJYtUQ=s64-c-mo", "member");
 
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL auto_increment,
@@ -39,3 +37,12 @@ CREATE TABLE `files` (
   `message_id` varchar(25) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `website_config` (
+  `item` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`item`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `website_config` (`item`, `value`) VALUES ("title", "DENA'S WEBSITE");

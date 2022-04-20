@@ -70,6 +70,14 @@ const Layout = () => {
           setAvatarImage(URL.createObjectURL(res.data));
         });
     }
+    authApi
+      .get('/control_center/get_title.php')
+      .then(({ data }) => {
+        setTitle(data.value);
+      })
+      .catch((error) => {
+        alert('Loading Title Error! Please Retry.');
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,7 +93,9 @@ const Layout = () => {
               color="primary"
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
             >
-              DENA'S WEBSITE
+              <Link to="/" style={{ textDecoration: 'none', color: 'unset' }}>
+                {title}
+              </Link>
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -133,7 +143,9 @@ const Layout = () => {
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
             >
-              DENA'S WEBSITE
+              <Link to="/" style={{ textDecoration: 'none', color: 'unset' }}>
+                {title}
+              </Link>
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (

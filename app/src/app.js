@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Message from './pages/Message';
+import ControlCenter from './pages/ControlCenter';
 
 export function App() {
   const profile = useProfile();
@@ -40,6 +41,7 @@ export function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/message/:id" element={<Message />} />
+          <Route path="/control-center" element={<ControlCenter />} />
         </Route>
       </Routes>
     </ProfileContext.Provider>

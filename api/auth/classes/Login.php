@@ -72,7 +72,7 @@ class Login
 
                 // database query, getting all the info of the selected user (allows login via email address in the
                 // username field)
-                $sql = "SELECT *
+                $sql = "SELECT id, username, img_link, role
                         FROM users
                         WHERE username = '" . $username . "';";
                 $result_of_login_check = $this->db_connection->query($sql);
@@ -85,8 +85,7 @@ class Login
 
                     // using PHP 5.5's password_verify() function to check if the provided password fits
                     // the hash of that user's password
-                    if (password_verify($_POST['password'], $result_row->password_hash)) { // todo: 記得把hash 弄回來
-                    // if ($_POST['password'] == $result_row->password_hash) {
+                    if (password_verify($_POST['password'], $result_row->password_hash)) {
 
                         // write user data into PHP SESSION (a file on your server)
                         $_SESSION['username'] = $result_row->username;
