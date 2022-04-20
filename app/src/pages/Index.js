@@ -61,7 +61,6 @@ const Index = () => {
         },
       }) // todo: 改成真的username(或hash)
       .then(({ data }) => {
-        console.log('data', data);
         setAllMessages(data.reverse());
         setLoading(false);
       })

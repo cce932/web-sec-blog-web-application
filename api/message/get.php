@@ -3,11 +3,7 @@
 require_once("../config/db.php");
 require_once("../config/header.php");
 
-// get!
-// $rest_json = file_get_contents("php://input");
-// $_POST = json_decode($rest_json, true);
 $method = $_SERVER['REQUEST_METHOD'];
-
 
 if ('GET' === $method && isset($_GET)) {
     $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
