@@ -100,7 +100,7 @@ const Index = () => {
             id: data.id,
             message: messageInput,
             username: profile.username,
-            name: messageFile.name,
+            name: messageFile?.name,
           },
           ...prev,
         ]);
