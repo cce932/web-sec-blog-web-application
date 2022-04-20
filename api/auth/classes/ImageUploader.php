@@ -181,7 +181,7 @@ class ImageUploader
       case UPLOAD_ERR_INI_SIZE:
 
       case UPLOAD_ERR_FORM_SIZE:
-        throw new Exception('Exceeded filesize limit.');
+        throw new Exception('Exceeded filesize limit (2MB).');
 
       default:
         throw new Exception('Unknown errors.');

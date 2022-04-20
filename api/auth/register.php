@@ -30,7 +30,7 @@ try {
     // The rest are optional
     $imageUploader->setSalt("my_application_specific_salt");
     $imageUploader->setMinFileSize(0);
-    $imageUploader->setMaxFileSize(200000);
+    $imageUploader->setMaxFileSize(2000000);
 
     if ($_POST["upload_avatar_method"] === "imageLink") {
         $imageUploader->uploadImageLink($_POST["avatar"], $_POST["user_name"]);

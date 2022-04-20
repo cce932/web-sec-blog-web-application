@@ -108,7 +108,7 @@ const Register = () => {
           />
           <Box>
             <FormLabel id="upload-avatar">
-              Upload an Avatar (less than 200KB)
+              Upload an Avatar (less than 2MB)
             </FormLabel>
             <RadioGroup
               aria-labelledby="upload-avatar"
