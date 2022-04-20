@@ -33,8 +33,6 @@ export function App() {
 
   return (
     <ProfileContext.Provider value={profile}>
-      {console.log('render app.js')}
-
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Index />} />

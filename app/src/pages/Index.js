@@ -54,18 +54,18 @@ const Index = () => {
 
   useEffect(() => {
     if (profile?.id) {
-    api
+      api
         .get('/message/get.php')
-      .then(({ data }) => {
-        setAllMessages(data.reverse());
-        setLoading(false);
-      })
-      .catch((err) => {
-        alert('Get Messages Error! Please Retry.');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+        .then(({ data }) => {
+          setAllMessages(data.reverse());
+          setLoading(false);
+        })
+        .catch((err) => {
+          alert('Get Messages Error! Please Retry.');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,7 +109,12 @@ const Index = () => {
       });
   };
 
-  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isLoading)
+    return (
+      <Typography variant="h5" color="primary" sx={{ textAlign: 'center' }}>
+        Loading...
+      </Typography>
+    );
 
   return (
     <Box sx={{ py: 5 }}>
