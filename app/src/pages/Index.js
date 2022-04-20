@@ -53,13 +53,9 @@ const Index = () => {
   const authApi = useAuthenticApi();
 
   useEffect(() => {
+    if (profile?.id) {
     api
-      .get('/message/get.php', {
-        header: {
-          'Access-Control-Allow-Header': 'Authentication',
-          Authentication: profile.username,
-        },
-      }) // todo: 改成真的username(或hash)
+        .get('/message/get.php')
       .then(({ data }) => {
         setAllMessages(data.reverse());
         setLoading(false);
@@ -70,6 +66,7 @@ const Index = () => {
       .finally(() => {
         setLoading(false);
       });
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
