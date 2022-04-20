@@ -72,7 +72,7 @@ class Login
 
                 // database query, getting all the info of the selected user (allows login via email address in the
                 // username field)
-                $sql = "SELECT id, username, img_link, role
+                $sql = "SELECT id, username, img_link, password_hash,role
                         FROM users
                         WHERE username = '" . $username . "';";
                 $result_of_login_check = $this->db_connection->query($sql);
@@ -92,6 +92,7 @@ class Login
                         $_SESSION['user_login_status'] = 1;
 
                         $this->messages[] = "Logged in success.";
+                        unset($result_row->password_hash);
                         $this->data = $result_row;
 
                     } else {
