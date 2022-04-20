@@ -122,9 +122,19 @@ const Layout = () => {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                <MenuItem onClick={logout}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
+                {profile?.id ? 
+                  <MenuItem onClick={logout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem> :
+                  <>
+                    <MenuItem onClick={() => {navigate('/login')}}>
+                      <Typography textAlign="center">Login</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={() => {navigate('/register')}}>
+                      <Typography textAlign="center">Register</Typography>
+                    </MenuItem>
+                  </>
+                }
                 <MenuItem onClick={goControlCenter}>
                   <Typography textAlign="center">Control Center</Typography>
                 </MenuItem>
@@ -149,24 +159,38 @@ const Layout = () => {
               >
                 Control Center
               </Button>
-              <Button
-                onClick={logout}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Logout
-              </Button>
+              {profile?.id ?
+                <Button
+                  onClick={logout}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Logout
+                </Button> :
+                 <>
+                  <Button
+                    onClick={() => {navigate('/login')}}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    onClick={() => {navigate('/register')}}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    Register
+                  </Button>
+               </> 
+              }
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                {profile?.img_link ? (
-                  <Avatar alt="Remy Sharp" src={profile.img_link} />
-                ) : (
-                  <Box sx={{ width: '30px' }}>
-                    <img src={avatarImage} alt="avatar" />
-                  </Box>
-                )}
-              </Tooltip>
+              {profile?.id ?(profile?.img_link ? (
+                <Avatar alt="Remy Sharp" src={profile.img_link} />
+              ) : (
+                <Box>
+                  <img src={avatarImage} alt="avatar" style={{objectFit: 'cover', width: '40px', height: '40px' }} />
+                </Box>
+              )) : <Avatar alt="Remy Sharp" src="" />}
             </Box>
           </Toolbar>
         </Container>
