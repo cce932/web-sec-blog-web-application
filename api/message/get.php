@@ -20,6 +20,7 @@ if ('GET' === $method && isset($_GET)) {
                     FROM `messages` LEFT JOIN `files` ON `messages`.`id` = `files`.`message_id` WHERE messages.id=" . $id . ";";
 
             $result_of_message_by_id = $db_connection->query($sql);
+            print_r($result_of_message_by_id);
             
             if ($result_of_message_by_id->num_rows == 1) {
                 http_response_code(200);
@@ -29,19 +30,14 @@ if ('GET' === $method && isset($_GET)) {
                 echo json_encode(["errors" => "Sorry, get message failed, please retry."]);
             }
         } else {
-            $sql = "SELECT messages.id, message, username, user_id, created_time, name, type, size, content, saved_date, message_id 
+            $sql = "SELECT messages.id, message, username, user_id, created_time, name, type, size, saved_date, message_id 
                     FROM `messages` LEFT JOIN `files` ON `messages`.`id` = `files`.`message_id`;";
 
             $result_of_messages = $db_connection->query($sql);
-
-            $responses = array();
-            while($row = $result_of_messages->fetch_all(MYSQLI_ASSOC)){
-                $responses = $row;
-            }
-
+            
             if ($result_of_messages) {
                 http_response_code(200);
-                echo json_encode($responses);
+                echo json_encode($result_of_messages->fetch_all(MYSQLI_ASSOC));
             } else {
                 http_response_code(400);
                 echo json_encode(["errors" => "Sorry, get messages failed, please retry."]);
