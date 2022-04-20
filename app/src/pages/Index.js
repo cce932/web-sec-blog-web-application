@@ -4,7 +4,7 @@ import { Editor, Parser } from 'react-tiny-bbcode';
 import api from '../api';
 import theme from '../theme';
 import SendIcon from '@mui/icons-material/Send';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProfileContext } from '../hooks/useProfile';
 import Message from '../components/Message';
@@ -51,6 +51,7 @@ const Index = () => {
   const [isLoading, setLoading] = useState(true);
   const { profile } = useProfileContext();
   const authApi = useAuthenticApi();
+  const location = useLocation();
 
   useEffect(() => {
     if (profile?.id) {
@@ -58,7 +59,6 @@ const Index = () => {
         .get('/message/get.php')
         .then(({ data }) => {
           setAllMessages(data.reverse());
-          setLoading(false);
         })
         .catch((err) => {
           alert('Get Messages Error! Please Retry.');
@@ -69,7 +69,7 @@ const Index = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.pathname, profile]);
 
   const addMessage = () => {
     if (!messageInput.length) {
