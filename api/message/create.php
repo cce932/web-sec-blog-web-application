@@ -35,26 +35,28 @@ if (isset($_POST)) {
 
     // Save file
     if (isset($_FILES['file'])) {
-      $name = $db_connection->real_escape_string($_FILES['file']['name']);
-      $type = $db_connection->real_escape_string($_FILES['file']['type']);
-      $data = $db_connection->real_escape_string(file_get_contents($_FILES['file']['tmp_name']));
-      $size = intval($_FILES['file']['size']);
-  
-      $insertFileSql = "
-          INSERT INTO `files` (
-              `name`, `type`, `size`, `content`, `saved_date`, `message_id`
-          )
-          VALUES (
-              '{$name}', '{$type}', {$size}, '{$data}', NOW(), '{$message_id}'
-          )";
+      try {
+        $name = $db_connection->real_escape_string($_FILES['file']['name']);
+        $type = $db_connection->real_escape_string($_FILES['file']['type']);
+        $data = $db_connection->real_escape_string(file_get_contents($_FILES['file']['tmp_name']));
+        $size = intval($_FILES['file']['size']);
+    
+        $insertFileSql = "
+            INSERT INTO `files` (
+                `name`, `type`, `size`, `content`, `saved_date`, `message_id`
+            )
+            VALUES (
+                '{$name}', '{$type}', {$size}, '{$data}', NOW(), '{$message_id}'
+            )";
 
-      $result = $db_connection->query($insertFileSql);
-  
-      
-      if($result) {
-          http_response_code(200);
-          echo json_encode(array_merge($res, ["file_messages" =>'Your file was successfully added!']));
-      } else {
+        $result = $db_connection->query($insertFileSql);
+    
+        
+        if($result) {
+            http_response_code(200);
+            echo json_encode(array_merge($res, ["file_messages" =>'Your file was successfully added!']));
+        }
+      } catch(Exception $e) {
         http_response_code(400);
         echo die(json_encode(["errors" => "Sorry, save message file failed. Please go back and try again."]));
       }
