@@ -12,18 +12,18 @@ if (isset($_POST)) {
       echo die(json_encode(["errors" => $db_connection->error]));
   }
   
-  
   if (!$db_connection->connect_errno) {
+    $message_id = uniqid();
   
     // Save message
     $message = $db_connection->real_escape_string(strip_tags($_POST['message'], ENT_QUOTES));
     $username = $db_connection->real_escape_string(strip_tags($_POST['username'], ENT_QUOTES));
     $user_id = $db_connection->real_escape_string(strip_tags($_SERVER['HTTP_AUTHORIZATION'], ENT_QUOTES));
   
-    $insertMsgSql = "INSERT INTO messages (message, username, user_id, created_time)
-            VALUES('" . $message . "', '" . $username . "', '" . $user_id ."' , NOW());";
+    $insertMsgSql = "INSERT INTO messages (id, message, username, user_id, created_time)
+            VALUES('" . $message_id . "', '" . $message . "', '" . $username . "', '" . $user_id ."' , NOW());";
+
     $query_new_message_insert = $db_connection->query($insertMsgSql);
-    $message_id = $db_connection->insert_id;
   
     if ($query_new_message_insert) {
         http_response_code(200);
@@ -45,9 +45,9 @@ if (isset($_POST)) {
               `name`, `type`, `size`, `content`, `saved_date`, `message_id`
           )
           VALUES (
-              '{$name}', '{$type}', {$size}, '{$data}', NOW(), {$message_id}
+              '{$name}', '{$type}', {$size}, '{$data}', NOW(), '{$message_id}'
           )";
-  
+
       $result = $db_connection->query($insertFileSql);
   
       

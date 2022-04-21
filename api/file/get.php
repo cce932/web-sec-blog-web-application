@@ -23,7 +23,7 @@ if ('GET' === $method && isset($_GET)) {
             $query = "
               SELECT `type`, `name`, `size`, `content`
               FROM `files`
-              WHERE `message_id` = {$message_id}";
+              WHERE `message_id` = '{$message_id}'";
 
             $result = $db_connection->query($query);
             

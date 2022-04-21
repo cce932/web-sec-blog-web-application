@@ -18,7 +18,7 @@ if ('GET' === $method && isset($_GET)) {
         $username = $db_connection->real_escape_string(strip_tags($_GET['username'], ENT_QUOTES));
         
         $sql = "SELECT (role) 
-                FROM `users` WHERE id=" . $user_id . " AND username = '" . $username . "';";
+                FROM `users` WHERE id='" . $user_id . "' AND username = '" . $username . "';";
 
         $result_of_message_by_id = $db_connection->query($sql);
         

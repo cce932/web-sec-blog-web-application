@@ -19,7 +19,7 @@ if ('DELETE' === $method && isset($_GET["id"])) {
     $id = $db_connection->real_escape_string(strip_tags($_GET['id'], ENT_QUOTES));
     $user_id = $db_connection->real_escape_string(strip_tags($_SERVER['HTTP_AUTHORIZATION'], ENT_QUOTES));
   
-    $sql = "DELETE messages , files  FROM messages LEFT JOIN files ON `messages`.`id` = `files`.`message_id` WHERE `messages`.`id` = " . $id . " AND `messages`.`user_id` = " . $user_id .";";
+    $sql = "DELETE messages , files  FROM messages LEFT JOIN files ON `messages`.`id` = `files`.`message_id` WHERE `messages`.`id` = '" . $id . "' AND `messages`.`user_id` = '" . $user_id ."';";
 
     $query_delete_user = $db_connection->query($sql);
 

@@ -17,7 +17,7 @@ if ('GET' === $method && isset($_GET)) {
             $id = $db_connection->real_escape_string(strip_tags($_GET['id'], ENT_QUOTES));
 
             $sql = "SELECT messages.id, message, username, user_id, created_time, name, type, size, content, saved_date, message_id 
-                    FROM `messages` LEFT JOIN `files` ON `messages`.`id` = `files`.`message_id` WHERE messages.id=" . $id . ";";
+                    FROM `messages` LEFT JOIN `files` ON `messages`.`id` = `files`.`message_id` WHERE messages.id= '" . $id . "';";
 
             $result_of_message_by_id = $db_connection->query($sql);
             print_r($result_of_message_by_id);
