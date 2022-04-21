@@ -78,7 +78,9 @@ const Index = () => {
     }
 
     if (messageInput.length > 250) {
-      alert(`Message tooo long! The numbers of word must be less than 250. Now it's ${messageInput.length} words.`);
+      alert(
+        `Message is tooo long! The numbers of word must be less than 250. Now it's ${messageInput.length} words.`
+      );
       return;
     }
 
@@ -104,8 +106,11 @@ const Index = () => {
         alert(data.msg_messages);
       })
       .catch((error) => {
-        console.log(error);
-        alert('Send Message Error! Please Retry.');
+        console.log('message create error', error);
+
+        alert(
+          'Send Message Error! Please Retry. Possible reason is that the attached file is too large.'
+        );
       });
   };
 
@@ -122,7 +127,7 @@ const Index = () => {
         <Typography variant="h5" color="primary.light">
           Leave a message ~
         </Typography>
-        <Typography color="white" sx={{mt: '5px !important'}}>
+        <Typography color="white" sx={{ mt: '5px !important' }}>
           (The numbers of words must be less than 250)
         </Typography>
         <Box>
