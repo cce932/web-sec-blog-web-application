@@ -23,8 +23,8 @@ CREATE TABLE `messages` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `messages` (`id`, `username`, `message`, `user_id`, `created_time`) VALUES ("6230d15007875", "dl", "test message dl 1", "4", "2022-04-19 02:02:34");
-INSERT INTO `messages` (`id`, `username`, `message`, `user_id`, `created_time`) VALUES ("6230d15007875", "dl", "test message dl 2", "4", "2022-04-19 04:02:44");
+INSERT INTO `messages` (`id`, `username`, `message`, `user_id`, `created_time`) VALUES ("6230dx5007875", "dd", "welcome to chat with me~", "6130d15007875", "2022-04-19 02:02:34");
+INSERT INTO `messages` (`id`, `username`, `message`, `user_id`, `created_time`) VALUES ("6230d15002875", "dd", "hello world", "6130d15007875", "2022-04-19 04:02:44");
 
 
 CREATE TABLE `files` (
