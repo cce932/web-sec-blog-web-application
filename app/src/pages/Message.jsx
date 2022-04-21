@@ -12,6 +12,7 @@ const Message = () => {
   const { id } = useParams();
   const authApi = useAuthenticApi();
   const [message, setMessage] = useState({});
+  const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,13 +27,14 @@ const Message = () => {
         .catch((error) => {
           console.log('error', error);
           if (location.pathname.includes('/message/')) navigate('/');
+        }).finally(() => {
+          setLoading(false);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [profile]);
 
-  if (!Object.keys(message).length)
-    return (
+  if (isLoading) return (
       <Typography variant="h5" color="primary" sx={{ textAlign: 'center' }}>
         Loading...
       </Typography>
