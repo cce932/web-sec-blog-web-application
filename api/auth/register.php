@@ -37,10 +37,6 @@ try {
     } else { // imageFile
         $imageUploader->uploadImageFile($_FILES["avatar"], $registration->new_user_id);
     }
-
-    // get image
-    // $result = $imageUploader->serve($_POST["user_name"]);
-    // print_r(json_encode($result));
 } catch (Exception $e) {
     $isSuccess = false;
     $res = array_merge($res, array("error" => "Avatar Upload Error: " . $e->getMessage()));

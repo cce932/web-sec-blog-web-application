@@ -368,7 +368,7 @@ class ImageUploader
     return file_exists($image_path);
   }
 
-  private function serveImageLink($username) {
+  private function serveImageLink($user_id) {
     $this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
     // change character set to utf8 and check it
@@ -380,7 +380,7 @@ class ImageUploader
     if (!$this->db_connection->connect_errno) {
       $sql = "SELECT img_link
           FROM users
-          WHERE username = '" . $username . "';";
+          WHERE id = '" . $user_id . "';";
       $result_of_img_link_check = $this->db_connection->query($sql);
       
       if ($result_of_img_link_check->num_rows == 1) {
@@ -406,7 +406,6 @@ class ImageUploader
     if (!$this->exists($identifier)) {
       // if image not saved in file, than find the image_link in DB
       $image_link = $this->serveImageLink($identifier);
-      
       return $image_link;
     }
     

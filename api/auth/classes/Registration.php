@@ -19,7 +19,8 @@ class Registration
      * @var array $messages Collection of success / neutral messages
      */
     public $messages = array();
-    public $new_user_id = null;
+
+    public $new_user_id = "";
 
     /**
      * the function "__construct()" automatically starts whenever an object of this class is created,
@@ -96,12 +97,12 @@ class Registration
                 if ($query_check_user_name->num_rows == 1) {
                     $this->errors[] = "Sorry, that username is already taken.";
                 } else {
+
+                    $this->new_user_id = uniqid();
                     // write new user's data into database
                     $sql = "INSERT INTO users (id, username, password_hash, img_link, role)
-                            VALUES('" . uniqid() . "', '" . $user_name . "', '" . $password_hash .  "', '" . "', 'member');";
+                            VALUES('" . $this->new_user_id . "', '" . $user_name . "', '" . $password_hash .  "', '" . "', 'member');";
                     $query_new_user_insert = $this->db_connection->query($sql);
-
-                    $this->new_user_id = $this->db_connection->insert_id;
                     
                     // if user has been added successfully
                     if ($query_new_user_insert) {
