@@ -16,11 +16,10 @@ if ('GET' === $method && isset($_GET)) {
         if (isset($_GET["id"])) {
             $id = $db_connection->real_escape_string(strip_tags($_GET['id'], ENT_QUOTES));
 
-            $sql = "SELECT messages.id, message, username, user_id, created_time, name, type, size, content, saved_date, message_id 
+            $sql = "SELECT messages.id, message, username, user_id, created_time, name, type, size, saved_date, message_id 
                     FROM `messages` LEFT JOIN `files` ON `messages`.`id` = `files`.`message_id` WHERE messages.id= '" . $id . "';";
 
             $result_of_message_by_id = $db_connection->query($sql);
-            print_r($result_of_message_by_id);
             
             if ($result_of_message_by_id->num_rows == 1) {
                 http_response_code(200);
