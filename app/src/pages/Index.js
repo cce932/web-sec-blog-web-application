@@ -134,7 +134,7 @@ const Index = () => {
           <Editor
             buttons={buttons}
             onChange={(value) => {
-              setMessageInput(value.replace('"', '\"'));
+              setMessageInput(value.replace(/"/g, '\\"'));
             }}
             button={{
               style: {
