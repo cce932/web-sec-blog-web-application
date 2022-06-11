@@ -11,6 +11,8 @@ COPY package.json ./
 # RUN npm install --global yarn
 RUN yarn install
 
+RUN export REACT_APP_API=http://139.59.96.214:8080
+
 COPY . .
 
 EXPOSE 3000
